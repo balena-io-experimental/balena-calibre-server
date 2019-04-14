@@ -11,6 +11,9 @@ function finish {
 }
 trap finish SIGINT SIGTERM
 
+# Workaround for Python's getaddrinfo to function
+echo "127.0.0.1 $(hostname)" >> /etc/hosts
+
 mkdir /calibre_data/library
 
 calibre_args=(
