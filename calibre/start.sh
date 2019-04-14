@@ -4,8 +4,8 @@
 function finish {
     echo "Shutting down Calibre"
     CALIBRE_PID=$(cat /var/run/calibre.pid)
-    kill $CALIBRE_PID
-    timeout 10 tail --pid=$CALIBRE_PID -f /dev/null
+    kill "$CALIBRE_PID"
+    timeout 10 tail --pid="$CALIBRE_PID" -f /dev/null
     echo "Finished, bye!"
     exit
 }
@@ -35,7 +35,7 @@ fi
 # Create library on first run
 calibredb --with-library=/calibre_data/library/ list > /dev/null
 
-echo "Starting Calibre Server with command line: ${calibre_args[@]}"
+echo "Starting Calibre Server with command line:" "${calibre_args[@]}"
 calibre-server "${calibre_args[@]}"
 
 # Simple idling in a way that signals are still trapped
