@@ -1,0 +1,10 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:buster
+
+WORKDIR /usr/src/app
+
+RUN install_packages calibre expect
+
+COPY calibre-userset ./
+COPY start.sh ./
+
+CMD ["bash", "start.sh"]

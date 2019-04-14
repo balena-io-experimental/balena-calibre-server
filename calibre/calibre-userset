@@ -1,0 +1,47 @@
+#!/usr/bin/expect -f
+
+set username [lindex $argv 0]
+set password [lindex $argv 1]
+
+set timeout -1
+ 
+spawn calibre-server --manage-users --userdb=/calibre_data/users.sqlite /calibre_data/library
+expect "What do you want to do?"
+send -- "1\r"
+expect "Enter the username:"
+send -- "$username\r"
+
+expect {
+
+	"Enter the new password for *" {
+		# New user creation
+		send -- "$password\r"
+		expect "Re-enter the new password for *"
+		send -- "$password\r"
+		expect "User $username added successfully!"
+	}
+
+	"The username $username already exists" {
+		# Username exist, re-set the password
+
+		# CTRL-C
+		send \x03
+
+		spawn calibre-server --manage-users --userdb=/calibre_data/users.sqlite /calibre_data/library
+		expect "What do you want to do?"
+		send -- "2\r"
+		expect "Existing user names:"
+		send -- "$username\r"
+		expect "What do you want to do?"
+		send -- "2\r"
+		expect "Enter the new password for *"
+		send -- "$password\r"
+		expect "Re-enter the new password for *"
+		send -- "$password\r"
+		expect "What do you want to do?"
+		send -- "5\r"
+		expect "What do you want to do?"
+		send -- "4\r"
+		expect eof
+	}
+}

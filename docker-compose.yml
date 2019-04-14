@@ -1,0 +1,10 @@
+version: '2.1'
+services: 
+  calibre:
+    build: ./calibre
+    volumes: 
+      - calibre_data:/calibre_data
+    network_mode: "host"
+
+volumes: 
+  calibre_data:
