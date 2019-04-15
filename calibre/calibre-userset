@@ -5,7 +5,7 @@ set password [lindex $argv 1]
 
 set timeout -1
  
-spawn calibre-server --manage-users --userdb=/calibre_data/users.sqlite /calibre_data/library
+spawn calibre-server --manage-users --userdb=/calibre_data/users.sqlite
 expect "What do you want to do?"
 send -- "1\r"
 expect "Enter the username:"
@@ -27,7 +27,7 @@ expect {
 		# CTRL-C
 		send \x03
 
-		spawn calibre-server --manage-users --userdb=/calibre_data/users.sqlite /calibre_data/library
+		spawn calibre-server --manage-users --userdb=/calibre_data/users.sqlite
 		expect "What do you want to do?"
 		send -- "2\r"
 		expect "Existing user names:"

@@ -4,7 +4,8 @@ WORKDIR /usr/src/app
 
 RUN install_packages calibre expect
 
-COPY calibre-userset ./
 COPY start.sh ./
+COPY calibre-userset ./
+COPY users.sh ./
 
 CMD ["bash", "start.sh"]
